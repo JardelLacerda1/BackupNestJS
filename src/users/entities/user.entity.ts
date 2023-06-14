@@ -7,6 +7,4 @@ export class User {
     idCompany: string;
     tags: string[];
     description: string;
-    
-
 }
