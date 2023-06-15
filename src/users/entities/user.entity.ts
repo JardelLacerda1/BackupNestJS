@@ -4,7 +4,6 @@ export class User {
     name: string;
     email: string;
     password: string;
-    idCompany: string;
-    tags: string[];
-    description: string;
+    NameCompany: string;
+    
 }

@@ -9,9 +9,7 @@ export class UserService {
       name: 'Jardel Lacerda',
       email: 'Jardellacerda2@outlook.com',
       password: '123456',
-      idCompany: 'Dropdesk147',
-      tags: ['ADM', 'Users'],
-      description: 'Controle de Users',
+      NameCompany: 'Dropdesk147',
     },
   ];
   
@@ -50,4 +48,12 @@ export class UserService {
       this.users.splice(indexUser, 1);
     }
   }
+  async EmailAlreadyExists(email: string){
+
+    const UserAlreadyExists = this.users.find(
+      users => users.email === email
+    );
+    return  UserAlreadyExists !== undefined;
+  }
 }
+
