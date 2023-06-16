@@ -1,10 +1,18 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { UserEntity } from './entities/user.entity';
 import { v4 as uuid } from 'uuid';
-import { CreateUserDto } from './dto/Create-user.dto';
-import { ListUserDTO } from './dto/ListUser.dto';
-import { UpdateUserDto } from './dto/Update-user.dto';
+import { CreateUserDto } from './dto/create.user.dto';
+import { ListUserDTO } from './dto/listUser.dto';
+import { UpdateUserDto } from './dto/update.user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,7 +32,6 @@ export class UsersController {
       massage: 'Usuario criado com sucesso',
     };
   }
-
   @Get()
   async listingUsers() {
     const savedUsers = await this.usersService.findAll();
@@ -44,5 +51,16 @@ export class UsersController {
       user: updatedUser,
       message: ' Usuario atualizado com sucesso',
     };
+  }
+
+  @Delete('/:id')
+  async remove(@Param('id') id: string) {
+    const usersRemove = await this.usersService.remove(id);
+    
+    return {
+      user: usersRemove,
+      message: ' Usuario Removido com sucesso',
+    };
+    
   }
 }

@@ -16,7 +16,7 @@ export class UniqueEmailValidetor implements ValidatorConstraintInterface {
     value: any,
     validationArguments?: ValidationArguments,
   ): Promise<boolean> {
-    const EmailAlreadyExists = await this.userService.EmailAlreadyExists(value);
+    const EmailAlreadyExists = this.userService.checkEmailExists(value);
     return !EmailAlreadyExists;
   }
 }
