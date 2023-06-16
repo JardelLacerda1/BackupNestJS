@@ -1,59 +1,35 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { User } from 'src/users/entities/user.entity';
+import { Injectable } from '@nestjs/common';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class UserService {
-  private users: User[] = [
-    {
-      id: 1,
-      name: 'Jardel Lacerda',
-      email: 'Jardellacerda2@outlook.com',
-      password: '123456',
-      NameCompany: 'Dropdesk147',
-    },
-  ];
-  
+  private users: UserEntity[] = [];
+
+  async create(users: UserEntity) {
+    this.users.push(users);
+  }
   findAll() {
     return this.users;
   }
 
-  findOne(id: string) {
-    const user = this.users.find(
-        (user: User) => user.id === Number(id));
+  async update(id: string, updateData: Partial<UserEntity>) {
+    const newUserData = this.users.find((savedUser) => savedUser.id === id);
 
-    if (!user) {
-      throw new HttpException(
-        `User ${id} não existe`, HttpStatus.NOT_FOUND);
+    if (!newUserData) {
+      throw new Error('Usuario não existe');
     }
-    return user;
+
+    Object.entries(updateData).forEach(([chave, valor]) => {
+      if (chave === 'id') {
+        return;
+      }
+      newUserData[chave] = valor;
+    });
+    return newUserData;
   }
 
-  create(createUserDto: any) {
-    this.users.push(createUserDto);
-
-  }
-
-  update(id: string, updateUserDto: any) {
-    const indexUser = this.users.findIndex(
-        (users: User) => users.id === Number(id));
-    this.users[indexUser] = updateUserDto;
-
-  }
-
-  remove(id: string) {
-    const indexUser = this.users.findIndex(
-      (users: User) => users.id === Number(id),
-    );
-    if (indexUser >= 0) {
-      this.users.splice(indexUser, 1);
-    }
-  }
-  async EmailAlreadyExists(email: string){
-
-    const UserAlreadyExists = this.users.find(
-      users => users.email === email
-    );
-    return  UserAlreadyExists !== undefined;
+  async EmailAlreadyExists(email: string) {
+    const UserAlreadyExists = this.users.find((users) => users.email === email);
+    return UserAlreadyExists !== undefined;
   }
 }
-
