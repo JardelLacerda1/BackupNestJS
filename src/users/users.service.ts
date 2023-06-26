@@ -1,40 +1,21 @@
-import { Injectable, Param } from '@nestjs/common';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { ListUserDTO } from "./dto/listUser.dto";
+import { UserEntity } from "./entities/user.entity";
+import { Repository } from "typeorm";
+
 
 @Injectable()
 export class UserService {
-  private users: UserEntity[] = [];
-  private searchId(id: string) {
-    const newUserData = this.users.find((savedUser) => savedUser.id === id);
+constructor(
+@InjectRepository(UserEntity)
+private readonly userRepository: Repository<UserEntity>){}
 
-    if (!newUserData) {
-      throw new Error('Usuario não existe');
-    }
-    return newUserData;
-  }
-  async create(users: UserEntity) {
-    this.users.push(users);
-  }
-  findAll() {
-    return this.users;
-  }
-  async update(id: string, updateData: Partial<UserEntity>) {
-    const users = this.searchId(id);
-
-    Object.entries(updateData).forEach(([chave, valor]) => {
-      if (chave === 'id') {
-        return;
-      }
-      users[chave] = valor;
-    });
-    return users;
-  }
-  checkEmailExists(email: string): boolean {
-    return !!this.users.find((users) => users.email === email);
-  }
-  async remove(id: string) {
-    const users = this.searchId(id);
-    this.users = this.users.filter((saved) => saved.id !== id);
-    return users;
-  }
+async listUsers(){
+    const usersSaved =await this.userRepository.find();
+    const ListUsers = usersSaved.map(
+        (user) => new ListUserDTO(user.id, user.name, user.nameCompany, user.email)
+    )
+    return ListUsers;
+}
 }

@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
-import { ProdutoModule } from './produto/produto.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   controllers: [AppController],
   providers: [AppService],
   imports: [
     UsersModule, 
-    ProdutoModule,
+    ProductModule,
     ConfigModule.forRoot({
       isGlobal:true
     }),
