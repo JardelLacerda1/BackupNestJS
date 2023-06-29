@@ -2,7 +2,6 @@ import {
   IsEmail,
   IsNotEmpty,
   IsOptional,
-  IsString,
   MinLength,
 } from 'class-validator';
 import { UniqueEmail } from '../validator/email.validator';
@@ -12,17 +11,18 @@ export class UpdateUserDto {
   @IsOptional()
   readonly name: string;
 
-  @IsNotEmpty({ message: ' O Campo name precisa ser preenchido' })
-  @MinLength(3)
+  @IsNotEmpty({ message: ' O Campo empresa precisa ser preenchido' })
+  @MinLength(3, { message: 'É necessario no minimo 3 caracteres no campo empresa' })
   @IsOptional()
-  readonly NameCompany: string;
+  readonly nameCompany: string;
 
   @IsEmail(undefined, { message: 'Email ou senha inválido' })
   @UniqueEmail({ message: 'Email já cadastrado em nosso sistema' })
   @IsOptional()
   readonly email: string;
-
+  
+  @IsNotEmpty()
   @MinLength(6, { message: 'É necessario no minimo 6 caracteres em sua senha' })
-  @IsOptional()
+  
   readonly password: string;
 }

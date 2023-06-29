@@ -16,14 +16,16 @@ export class UserEntity {
   @Column({ name: 'name', length: '50', nullable: false })
   name: string;
 
+  @Column({ name: 'nameCompany', length: '50', nullable: false })
+  nameCompany: string;
+
   @Column({ name: 'email', length: '50', nullable: false })
   email: string;
+
 
   @Column({ name: 'password', length: '50', nullable: false })
   password: string;
 
-  @Column({ name: 'NameCompany', length: '50', nullable: false })
-  nameCompany: string;
 
   @CreateDateColumn({name: 'created_at'})
   createdAt: string;

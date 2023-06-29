@@ -13,47 +13,56 @@ import { v4 as uuid } from 'uuid';
 import { CreateUserDto } from './dto/createUser.dto';
 import { ListUserDTO } from './dto/listUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
-import { UserService } from './users.service';
+import { UserService } from './user.service';
 
-@Controller('users')
+@Controller('/users')
 export class UserController {
   constructor(
     private userRepository: UserRepository,
-    private userSevice: UserService
-
-    ){}
+    private userService: UserService,
+  ) {}
 
   @Post()
-  async create(@Body() dadosDoUser: CreateUserDto) {
+  async createUser(
+    @Body() dataDoUser: CreateUserDto) {
     const userEntity = new UserEntity();
-    userEntity.email = dadosDoUser.email;
-    userEntity.password = dadosDoUser.password;
-    userEntity.name = dadosDoUser.name;
     userEntity.id = uuid();
-
-    this.userRepository.create(userEntity);
+    userEntity.name = dataDoUser.name;
+    userEntity.nameCompany = dataDoUser.nameCompany;
+    userEntity.email = dataDoUser.email;
+    userEntity.password = dataDoUser.password;
+    
+    
+    this.userService.createUser(userEntity);
 
     return {
-      user: new ListUserDTO(userEntity.id, userEntity.name, userEntity.nameCompany, userEntity.email),
-      massage: 'Usuario criado com sucesso',
+      user: new ListUserDTO(
+        userEntity.id,
+        userEntity.name,
+        userEntity.nameCompany,
+        userEntity.email,
+        
+      ),
+      messagem: 'Usuario criado com sucesso',
     };
   }
 
   @Get()
   async listingUsers() {
-    const savedUsers = await this.userSevice.listUsers();
-    
+    const savedUsers = await this.userService.listUsers();
+  
     return savedUsers;
   }
 
   @Put('/:id')
   async updateUser(
     @Param('id') id: string,
-    @Body() updateInformation: UpdateUserDto,
-  ) {
-    const updatedUser = await this.userRepository.update(
-      id, updateInformation
-      );
+    @Body() newData: UpdateUserDto,
+    ) {
+    const updatedUser = await this.userService.updateUser(
+     id,
+     newData,
+     );
     return {
       user: updatedUser,
       message: ' Usuario atualizado com sucesso',
@@ -61,13 +70,13 @@ export class UserController {
   }
 
   @Delete('/:id')
-  async remove(@Param('id') id: string) {
-    const usersRemove = await this.userRepository.remove(id);
-    
+  async remove(
+    @Param('id') id: string) {
+    const usersRemove = await this.userService.deleteUser(id);
+
     return {
       user: usersRemove,
       message: ' Usuario Removido com sucesso',
     };
-    
   }
 }

@@ -4,7 +4,7 @@ import { UserController } from './user.controller';
 import { UserRepository } from './user.repository';
 import { UniqueEmailValidetor } from './validator/email.validator';
 import { UserEntity } from './entities/user.entity';
-import { UserService } from './users.service';
+import { UserService } from './user.service';
 
 @Module({
   imports:[TypeOrmModule.forFeature([UserEntity])],

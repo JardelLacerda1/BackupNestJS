@@ -17,7 +17,8 @@ import { ProductRepository } from './product.repository';
 export class ProductController {
   constructor(private readonly productService: ProductRepository) {}
   @Post()
-  async criaNovo(@Body() dadosProduto: CriaProdutoDTO) {
+  async NewCreate(
+    @Body() dadosProduto: CriaProdutoDTO) {
     const produto = new ProductEntity();
 
     produto.id = randomUUID();

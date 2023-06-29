@@ -5,9 +5,9 @@ export class CreateUserDto {
   @IsNotEmpty({ message: ' O Campo name precisa ser preenchido' })
   readonly name: string;
 
-  @IsNotEmpty({ message: ' O Campo name precisa ser preenchido' })
-  @MinLength(3)
-  readonly NameCompany: string;
+  @IsNotEmpty({ message: ' O Campo empresa precisa ser preenchido' })
+  @MinLength(3, { message: 'É necessario no minimo 3 caracteres no campo empresa' })
+  readonly nameCompany: string;
 
   @IsEmail(undefined, { message: 'Email ou senha inválido' })
   @UniqueEmail({ message: 'Email já cadastrado em nosso sistema' })
