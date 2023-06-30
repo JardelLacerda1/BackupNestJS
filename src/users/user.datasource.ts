@@ -16,18 +16,33 @@ export abstract class UserDataSource {
 export class UserDataSourceImpl implements UserDataSource {
   public searchId(id: string): Promise<UserEntity> {
     console.log('searchId DATA SOURCE COM SUCESSO');
-    const userEntity = new UserEntity();
+    const userEntity = new UserEntity({
+      idCompany: '12345',
+      name: 'Jardel lacerda',
+      email:'jaredelL@hotmail.com',
+
+    });
     return Promise.resolve(userEntity);
   }
-
   public create(user: UserEntity): Promise<UserEntity> {
-    const userEntity = new UserEntity();
+    const userEntity = new UserEntity({
+      ...user
+      });
     console.log('CREATE USER DATA SOURCE COM SUCESSO');
     return Promise.resolve(userEntity);
+  }
+  public update(user: UserEntity): Promise<Record<string, boolean>> {
+    throw new Error('Method not implemented.');
+  }
+  public remove(id: string): Promise<Record<string, boolean>> {
+    throw new Error('Method not implemented.');
+  }
+}
+
     /* 
     userEntity.id = generateUUID();
     userEntity.name = dataDoUser.name;
-    userEntity.nameCompany = dataDoUser.nameCompany;
+    userEntity.idCompany = dataDoUser.nameCompany;
     userEntity.email = dataDoUser.email;
     userEntity.password = dataDoUser.password;
 
@@ -42,11 +57,4 @@ export class UserDataSourceImpl implements UserDataSource {
       ),
       messagem: 'Usuario criado com sucesso',
     }; */
-  }
-  public update(user: UserEntity): Promise<Record<string, boolean>> {
-    throw new Error('Method not implemented.');
-  }
-  public remove(id: string): Promise<Record<string, boolean>> {
-    throw new Error('Method not implemented.');
-  }
-}
+

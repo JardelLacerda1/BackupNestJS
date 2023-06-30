@@ -5,21 +5,30 @@ import { UsersModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
-import { ProductModule } from './product/product.module';
 
 @Module({
   controllers: [AppController],
   providers: [AppService],
   imports: [
     UsersModule, 
-    //ProductModule,
     ConfigModule.forRoot({
-      isGlobal:true
+      isGlobal:true,
+      envFilePath: ['.env'],
     }),
-  /*   TypeOrmModule.forRootAsync({
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+     database: process.env.DB_DATABASE,
+     host: process.env.DB_HOST,
+     password: process.env.DB_PASSWORD,
+     port: Number(process.env.DB_PORT),
+     username: process.env.DB_USERNAME,
+
+
+    }) ,
+      /*/
       useClass: PostgresConfigService,
       inject:[PostgresConfigService]
-    }) */
+      /*/
   ],
 })
 export class AppModule {}

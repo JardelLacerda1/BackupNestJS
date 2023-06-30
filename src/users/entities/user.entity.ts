@@ -1,11 +1,37 @@
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity({ name: 'user' })
 export class UserEntity {
+  @PrimaryGeneratedColumn('rowid')
   id?: string;
+
+  @Column({ name: 'idCompany', nullable: false })
   idCompany: string;
+
+  @Column({ name: 'email', nullable: false })
   email: string;
+
+  @Column({ name: 'name', nullable: false })
   name: string;
+
+  @Column({ name: 'password', nullable: false })
   password?: string;
+
+  @CreateDateColumn({ name: 'created_at' })
   createdAt?: string;
+
+  @UpdateDateColumn({ name: 'updated_at' })
   updateAt?: string;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: string;
 
   static fromJson(json: Record<string, any>): UserEntity {
     const user = new UserEntity({
@@ -13,7 +39,6 @@ export class UserEntity {
     });
     return user;
   }
-
   constructor({
     id,
     idCompany,
@@ -21,6 +46,8 @@ export class UserEntity {
     name,
     password,
     createdAt,
+    deletedAt,
+    updateAt,
   }: {
     id?: string;
     idCompany: string;
@@ -28,6 +55,8 @@ export class UserEntity {
     email: string;
     password?: string;
     createdAt?: string;
+    deletedAt?: string;
+    updateAt?: string;
   }) {
     Object.assign(this, {
       id,
@@ -36,6 +65,8 @@ export class UserEntity {
       email,
       password,
       createdAt,
+      deletedAt,
+      updateAt,
     });
   }
 }

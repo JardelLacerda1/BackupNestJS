@@ -7,7 +7,7 @@ import { UserRepositoryImpl } from './user.repository_impl';
 import { UserDataSource, UserDataSourceImpl } from './user.datasource';
 
 @Module({
-  //imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
   providers: [
     {
