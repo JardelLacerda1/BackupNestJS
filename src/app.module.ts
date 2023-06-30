@@ -12,14 +12,14 @@ import { ProductModule } from './product/product.module';
   providers: [AppService],
   imports: [
     UsersModule, 
-    ProductModule,
+    //ProductModule,
     ConfigModule.forRoot({
       isGlobal:true
     }),
-    TypeOrmModule.forRootAsync({
+  /*   TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
       inject:[PostgresConfigService]
-    })
+    }) */
   ],
 })
 export class AppModule {}

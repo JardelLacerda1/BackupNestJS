@@ -1,38 +1,41 @@
-import { Column,
-   CreateDateColumn,
-   DeleteDateColumn,
-   Entity,
-   PrimaryGeneratedColumn,
-   UpdateDateColumn 
-  } from 'typeorm';
-export { Entity, Column } from 'typeorm';
-
-@Entity({ name: 'users' })
 export class UserEntity {
-  
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-  
-  @Column({ name: 'name', length: '50', nullable: false })
-  name: string;
-
-  @Column({ name: 'nameCompany', length: '50', nullable: false })
-  nameCompany: string;
-
-  @Column({ name: 'email', length: '50', nullable: false })
+  id?: string;
+  idCompany: string;
   email: string;
+  name: string;
+  password?: string;
+  createdAt?: string;
+  updateAt?: string;
 
+  static fromJson(json: Record<string, any>): UserEntity {
+    const user = new UserEntity({
+      ...(json as UserEntity),
+    });
+    return user;
+  }
 
-  @Column({ name: 'password', length: '50', nullable: false })
-  password: string;
-
-
-  @CreateDateColumn({name: 'created_at'})
-  createdAt: string;
-
-  @UpdateDateColumn({name: 'updated_at'})
-  updateAt: string;
- 
-  @DeleteDateColumn({name: 'deleted_at'})
-  deleteAt: string;
+  constructor({
+    id,
+    idCompany,
+    email,
+    name,
+    password,
+    createdAt,
+  }: {
+    id?: string;
+    idCompany: string;
+    name: string;
+    email: string;
+    password?: string;
+    createdAt?: string;
+  }) {
+    Object.assign(this, {
+      id,
+      idCompany,
+      name,
+      email,
+      password,
+      createdAt,
+    });
+  }
 }
