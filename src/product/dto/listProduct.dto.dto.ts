@@ -1,21 +1,21 @@
 class ListProductFeatures {
-    nome: string;
-    descricao: string;
+    name: string;
+    description: string;
   }
   
   class ListImgProductDTO {
     url: string;
-    descricao: string;
+    description: string;
   }
   
   export class ListProductoDTO {
     id: string;
-    usuarioId: string;
-    nome: string;
-    valor: number;
-    quantidade: number;
-    descricao: string;
-    categoria: string;
-    caracteristicas: ListProductFeatures[];
+    userId: string;
+    name: string;
+    value: number;
+    amount: number;
+    description: string;
+    category: string;
+    characteristics: ListProductFeatures[];
     imagens: ListImgProductDTO[];
   }

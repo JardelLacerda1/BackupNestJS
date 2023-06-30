@@ -9,37 +9,37 @@ export class ProductRepository {
     return this.products;
   }
 
-  salva(dadosProduto: ProductEntity) {
-    this.products.push(dadosProduto);
-    return dadosProduto;
+  save(dataProduct: ProductEntity) {
+    this.products.push(dataProduct);
+    return dataProduct;
   }
 
   private searchById(id: string) {
-    const possivelProduto = this.products.find((produto) => produto.id === id);
+    const possibleProduct = this.products.find((product) => product.id === id);
 
-    if (!possivelProduto) {
+    if (!possibleProduct) {
       throw new Error('Produto não existe');
     }
 
-    return possivelProduto;
+    return possibleProduct;
   }
 
-  async atualiza(id: string, dadosProduto: Partial<ProductEntity>) {
-    const dadosNaoAtualizaveis = ['id', 'usuarioId'];
-    const produto = this.searchById(id);
-    Object.entries(dadosProduto).forEach(([chave, valor]) => {
-      if (dadosNaoAtualizaveis.includes(chave)) {
+  async update(id: string, dataProduct: Partial<ProductEntity>) {
+    const dataNotUpdatable = ['id', 'userId'];
+    const product = this.searchById(id);
+    Object.entries(dataProduct).forEach(([key, value]) => {
+      if (dataNotUpdatable.includes(key)) {
         return;
       }
-      produto[chave] = valor;
+      product[key] = value;
     });
 
-    return produto;
+    return product;
   }
 
   async remove(id: string) {
-    const produtoRemovido = this.searchById(id);
-    this.products = this.products.filter((produto) => produto.id !== id);
-    return produtoRemovido;
+    const removedProduct = this.searchById(id);
+    this.products = this.products.filter((product) => product.id !== id);
+    return removedProduct;
   }
 }

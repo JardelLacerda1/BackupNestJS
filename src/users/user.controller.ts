@@ -18,7 +18,6 @@ import { UserService } from './user.service';
 @Controller('/users')
 export class UserController {
   constructor(
-    private userRepository: UserRepository,
     private userService: UserService,
   ) {}
 
@@ -50,7 +49,7 @@ export class UserController {
   @Get()
   async listingUsers() {
     const savedUsers = await this.userService.listUsers();
-  
+
     return savedUsers;
   }
 
