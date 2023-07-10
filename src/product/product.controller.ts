@@ -7,68 +7,36 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-import { CreateProducDTO } from './dto/createProduct.dto';
 import { ProductEntity } from './entitiesProduct/products.entity';
-import { UpdateProductDTO } from './dto/updateProduct.dto';
 import { ProductRepository } from './product.repository';
-import { ProductService } from './product.service';
 
-@Controller('produtos')
+@Controller('/product')
 export class ProductController {
-  constructor(
-    private readonly productRepository: ProductRepository,
-    private readonly productService: ProductService
-    ) {}
+  constructor(private readonly productRepository: ProductRepository) {}
 
   @Post()
-  async NewCreate(
-    @Body() dataProduct: CreateProducDTO) {
-    const product = new ProductEntity();
-
-    product.id = randomUUID();
-    product.name = dataProduct.name;
-    product.userId = dataProduct.userId;
-    product.value = dataProduct.value;
-    product.amount = dataProduct.amount;
-    product.description = dataProduct.description;
-    product.category = dataProduct.category;
-    // produto.caracteristicas = dadosProduto.caracteristicas;
-    // produto.imagens = dadosProduto.imagens;
-
-    const registeredProduct = this.productService.createProduct(product);
-    return registeredProduct;
-  }
-  
-  @Get()
-  async findAll() {
-    return this.productRepository.findAll();
+  async create(@Body() productData: Record<string, any>) {
+    const product: ProductEntity = ProductEntity.fromJson(productData);
+    return this.productRepository.create(product);
   }
 
   @Put('/:id')
-  async update(
-    @Param('id') id: string,
-    @Body() dataProduct: UpdateProductDTO,
-  ) {
-    const changedProduct = await this.productRepository.update(
-      id,
-      dataProduct,
-    );
+  async update(@Body() productData: Record<string, any>) {
+    const product: ProductEntity = ProductEntity.fromJson(productData);
+    return this.productRepository.update(product);
+  }
 
-    return {
-      mensagem: 'produto atualizado com sucesso',
-      product: changedProduct,
-    };
+  @Get('/:id')
+  async searchId(@Param('id') id: string) {
+    console.log('entry product searchId');
+    const response = await this.productRepository.searchId(id);
+    console.log(response);
+    return response;
   }
 
   @Delete('/:id')
-  async remove(
-    @Param('id') id: string) {
-    const productRemoved = await this.productRepository.remove(id);
-
-    return {
-      mensagem: 'Produto removido com sucesso',
-      product: productRemoved,
-    };
+  async remove(@Param('id') id: string) {
+    return this.productRepository.remove(id);
   }
 }
+  

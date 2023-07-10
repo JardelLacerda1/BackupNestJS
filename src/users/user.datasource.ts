@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from './entities/user.entity';
-import { generateUUID } from 'src/utils/utils';
 
 export abstract class UserDataSource {
   public abstract searchId(id: string): Promise<UserEntity>;
@@ -20,7 +19,6 @@ export class UserDataSourceImpl implements UserDataSource {
       idCompany: '12345',
       name: 'Jardel lacerda',
       email:'jaredelL@hotmail.com',
-
     });
     return Promise.resolve(userEntity);
   }
@@ -40,21 +38,5 @@ export class UserDataSourceImpl implements UserDataSource {
 }
 
     /* 
-    userEntity.id = generateUUID();
-    userEntity.name = dataDoUser.name;
-    userEntity.idCompany = dataDoUser.nameCompany;
-    userEntity.email = dataDoUser.email;
-    userEntity.password = dataDoUser.password;
-
-    this.userService.createUser(userEntity);
-
-    return {
-      user: new ListUserDTO(
-        userEntity.id,
-        userEntity.name,
-        userEntity.nameCompany,
-        userEntity.email,
-      ),
-      messagem: 'Usuario criado com sucesso',
-    }; */
+     */
 

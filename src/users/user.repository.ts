@@ -10,4 +10,5 @@ export abstract class UserRepository {
   public abstract update(user: UserEntity): Promise<Record<string, boolean>>;
 
   public abstract remove(id: string): Promise<Record<string, boolean>>;
+  
 }

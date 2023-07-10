@@ -1,46 +1,56 @@
 import {
-    Entity,
     Column,
-    PrimaryGeneratedColumn,
+    CreateDateColumn,
     DeleteDateColumn,
-    UpdateDateColumn,
-    CreateDateColumn
-} from 'typeorm';
-
-@Entity({ name: 'products'})
-export class ProductEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column({ name: 'userId', length: 100, nullable: false })
-    userId: string;
-
-    @Column({ name: 'name', length: 100, nullable: false })
-    name: string;
-
-    @Column({ name: 'value', nullable: false })
-    value: number;
-
-    @Column({ name: 'amount', nullable: false })
-    amount: number;
-
-    @Column({ name: 'description', length: 255, nullable: false })
-    description: string;
-
-    @Column({ name: 'category', length: 100, nullable: false })
-    category: string;
-
-    @CreateDateColumn({ name: 'created_at' })
-    createdAt: string;
+    Entity,
+    PrimaryGeneratedColumn,
+  } from 'typeorm';
   
-    @UpdateDateColumn({ name: 'updated_at' })
-    updatedAt: string;
+  @Entity({ name: '/product' })
+  export class ProductEntity {
+    @PrimaryGeneratedColumn('rowid')
+    id?: string;
+  
+    @Column({ name: 'nameProduct', nullable: false })
+    nameproduct: string;
+
+    @Column({ name: 'valor', nullable: false })
+    valor?: string;
+
+    @Column({ name: 'description', nullable: false })
+    description?: string;
+  
+  
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt?: string;
   
     @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt: string;
   
-    // caracteristicas: CaracteristicaProduto[];
-    // imagens: ImagemProduto[];
+    static fromJson(json: Record<string, any>): ProductEntity {
+      const product = new ProductEntity({
+        ...(json as ProductEntity),
+      });
+      return product;
+    }
+    constructor({
+      id,
+      nameproduct,
+      createdAt,
+      deletedAt,
+    }: {
+      id?: string;
+      nameproduct: string;
+      createdAt?: string;
+      deletedAt?: string;
+     
+    }) {
+      Object.assign(this, {
+        id,
+        nameproduct,
+        createdAt,
+        deletedAt,
+      });
+    }
   }
-
-    
+  

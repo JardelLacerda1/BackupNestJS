@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostgresConfigService } from './config/postgres.config.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -22,6 +21,9 @@ import { ConfigModule } from '@nestjs/config';
      password: process.env.DB_PASSWORD,
      port: Number(process.env.DB_PORT),
      username: process.env.DB_USERNAME,
+     entities: [`${__dirname}/../*.entity{.js,.ts}`],
+     migrations: [`${__dirname}/migration/{.ts,*.js}'}`],
+     migrationsRun: true,
 
 
     }) ,

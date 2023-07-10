@@ -5,9 +5,11 @@ import { UserDataSource } from './user.datasource';
 
 @Injectable()
 export class UserRepositoryImpl implements UserRepository {
-  constructor(private readonly userDataSource: UserDataSource) {}
+  constructor(
+    
+    private readonly userDataSource: UserDataSource) {}
 
-  public searchId(id: string): Promise<UserEntity> {
+  public searchId(id:string): Promise<UserEntity> {
     try {
       return this.userDataSource.searchId(id);
     } catch (e) {
@@ -35,4 +37,5 @@ export class UserRepositoryImpl implements UserRepository {
       console.error(e);
     }
   }
+
 }

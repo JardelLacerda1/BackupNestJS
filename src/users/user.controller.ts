@@ -38,4 +38,6 @@ export class UserController {
   async remove(@Param('id') id: string) {
     return this.userRepository.remove(id);
   }
+ 
+
 }
